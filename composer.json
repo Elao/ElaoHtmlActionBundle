@@ -1,0 +1,31 @@
+{
+    "name": "elao/html-action-bundle",
+    "type": "symfony-bundle",
+    "description": "A set of HTML actions for elao/admin-bundle",
+    "keywords": ["html"],
+    "homepage": "https://github.com/Elao/ElaoHtmlActionBundle.git",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Jarrand",
+            "homepage": "https://github.com/Tom32i"
+        }
+    ],
+    "require": {
+        "php": "~5.4",
+        "symfony/framework-bundle": "~2.5"
+    },
+    "suggest": {
+        "elao/admin-bundle": "0.3.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elao\\Bundle\\HtmlActionBundle\\": "."
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
