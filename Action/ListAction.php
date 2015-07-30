@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Elao\Bundle\AdminBundle\Action\Action;
-use Elao\Bundle\AdminBundle\Behaviour\FilterSetInterface;
+use Elao\Bundle\HtmlActionBundle\Behaviour\FilterSetInterface;
 
 /**
  * The default action for list pages
