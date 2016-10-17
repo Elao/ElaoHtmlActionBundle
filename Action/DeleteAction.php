@@ -25,10 +25,8 @@ class DeleteAction extends FormAction
      */
     protected function getModel(Request $request)
     {
-        $model = $this->modelManager->find($request->get('_route_params'));
-
-        if (!$model) {
-            throw new NotFoundHttpException;
+        if (!$model = $this->repository->findOneBy($request->get('_route_params'))) {
+            throw new NotFoundHttpException();
         }
 
         return $model;
@@ -41,6 +39,6 @@ class DeleteAction extends FormAction
      */
     protected function onFormValid(Form $form)
     {
-        $this->modelManager->delete($form->getData());
+        $this->repository->delete($form->getData());
     }
 }

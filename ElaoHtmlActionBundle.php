@@ -11,8 +11,24 @@
 
 namespace Elao\Bundle\HtmlActionBundle;
 
+use Elao\Bundle\HtmlActionBundle\DependencyInjection\Action\Factory;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ElaoHtmlActionBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $extension = $container->getExtension('elao_admin');
+        $extension->addActionFactory(new Factory\ReadActionFactory());
+        $extension->addActionFactory(new Factory\CreateActionFactory());
+        $extension->addActionFactory(new Factory\UpdateActionFactory());
+        $extension->addActionFactory(new Factory\DeleteActionFactory());
+        $extension->addActionFactory(new Factory\ListActionFactory());
+    }
 }

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Elao\Bundle\HtmlActionBundle\Behavior;
+namespace Elao\Bundle\HtmlActionBundle\Behaviour;
 
 /**
  * Filter set interface

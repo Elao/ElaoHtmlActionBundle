@@ -24,6 +24,6 @@ class CreateAction extends FormAction
      */
     protected function getModel(Request $request)
     {
-        return $this->modelManager->create();
+        return $this->repository->create();
     }
 }
