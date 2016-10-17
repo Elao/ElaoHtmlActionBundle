@@ -1,22 +1,25 @@
 {
     "name": "elao/html-action-bundle",
     "type": "symfony-bundle",
-    "description": "A set of HTML actions for elao/admin-bundle",
-    "keywords": ["html"],
-    "homepage": "https://github.com/Elao/ElaoHtmlActionBundle.git",
+    "description": "A set of HTML actions for elao/admin-bundle.",
+    "keywords": ["elao", "admin", "crud"],
+    "homepage": "https://github.com/Elao/ElaoHtmlActionBundle",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Elao",
+            "homepage": "http://www.elao.com"
+        },
         {
             "name": "Thomas Jarrand",
             "homepage": "https://github.com/Tom32i"
         }
     ],
     "require": {
-        "php": "~5.4",
-        "symfony/framework-bundle": "~2.5"
+        "symfony/framework-bundle": "~3.1"
     },
     "suggest": {
-        "elao/admin-bundle": "0.3.*@dev"
+        "elao/admin-bundle": "For building an Api through REST actions"
     },
     "autoload": {
         "psr-4": {
@@ -25,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }
