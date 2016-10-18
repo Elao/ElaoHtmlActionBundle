@@ -29,7 +29,7 @@ abstract class FormActionFactory extends ActionFactory
             ->children()
                 ->scalarNode('form')
                     ->info('Form class name or service id.')
-                    ->isRequired()
+                    ->defaultValue($this->getFormType())
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('redirection')
@@ -55,7 +55,16 @@ abstract class FormActionFactory extends ActionFactory
      */
     protected function getView()
     {
-        return '::form.html.twig';
+        return ':%name%:form.html.twig';
+    }
+
+    /**
+     * Get form type
+     *
+     * @return null|string
+     */
+    protected function getFormType() {
+        return null;
     }
 
     /**

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The default action for list pages
  */
-class ListAction extends Action
+class ListAction extends AbstractAction
 {
     /**
      * Form factory

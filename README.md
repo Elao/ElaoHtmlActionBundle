@@ -33,56 +33,35 @@ Here is a configuration sample
 ```yml
 elao_admin:
     administrations:
-        MyEntity:
-            options:
-                model: AppBundle\Entity\MyEntity
+        post:
             actions:
                 list:
-                    options:
-                        parameters:
-                            # Explicit path is optional
-                            view: AppBundle:MyEntity:list.html.twig
-                            # Pagination is optional
-                            pagination:
-                                per_page: 10
-                            # Filters are optional
-                            filters:
-                                form_type: AppBundle\Form\FiltersMyEntityType
-                                data: ~
+                    html_list: ~
                 create:
-                    options:
-                        parameters:
-                            # Explicit path is optional
-                            view: AppBundle:MyEntity:update.html.twig
-                            form_type: AppBundle\Form\MyEntityType
-                            # Explicit redirection is optional. Default for this action is 'update'
-                            redirection: 'list'
-                read:
-                    options:
-                        parameters:
-                            # Explicit path is optional
-                            view: AppBundle:MyEntity:read.html.twig
+                    html_create:
+                        form: BlogBundle\Form\PostType
                 update:
-                    options:
-                        parameters:
-                            # Explicit path is optional
-                            view: AppBundle:MyEntity:update.html.twig
-                            form_type: AppBundle\Form\MyEntityType
-                            # Explicit redirection is optional. Default for this action is 'update'
-                            redirection: 'list'
+                    html_update:
+                        form: BlogBundle\Form\PostType
+                read:
+                    html_read: ~
                 delete:
-                    options:
-                        parameters:
-                            # Explicit path is optional
-                            view: AppBundle:MyEntity:delete.html.twig
-                            form_type: AppBundle\Form\DeleteMyEntityType
-                            # Explicit redirection is optional. Default for this action is 'list'
-                            redirection: 'list'
+                    html_delete:
+                        security: has_role('ROLE_ADMIN')
 ```
+
+### Default configuration
+
+:%name%:%alias%.html.twig
+
+Repositories
+
+By default, the actions are looking for a
 
 ##Views
 Please note that the views are not provided with the bundle. You have to create them to display the different forms.
 
-Default path for the view is `app/Resources/%administration_name%/%action_name%.html.twig`. You can override this by setting an explicit view in action's options.
+Default path for the view is `app/Resources/%administration_name%/%action_name%.html.twig`.
+You can override this by setting an explicit view in action's options.
 
 Pagination is optional, and if enabled (configuration exists) is rendered with [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle)

@@ -18,7 +18,7 @@ use Symfony\Component\Form\Form;
 /**
  * The default action for delete pages
  */
-class DeleteAction extends FormAction
+class DeleteAction extends AbstractFormAction
 {
     /**
      * {@inheritdoc}

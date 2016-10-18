@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * The default action for create and update pages
  */
-abstract class FormAction extends Action
+abstract class AbstractFormAction extends AbstractAction
 {
     /**
      * Form factory
@@ -52,14 +52,14 @@ abstract class FormAction extends Action
      * @param array $parameters
      */
     public function __construct(
+        RepositoryInterface $repository,
         EngineInterface $templating,
         FormFactoryInterface $formFactory,
         NotifierInterface $notifier,
         RouteResolverInterface $routes,
-        RepositoryInterface $repository,
-        array $parameters = []
+        array $parameters
     ) {
-        parent::__construct($templating, $repository, $parameters);
+        parent::__construct($repository, $templating, $parameters);
 
         $this->formFactory = $formFactory;
         $this->routes = $routes;

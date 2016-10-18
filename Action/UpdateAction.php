@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * The default action for update pages
  */
-class UpdateAction extends FormAction
+class UpdateAction extends AbstractFormAction
 {
     /**
      * {@inheritdoc}

@@ -22,6 +22,13 @@ use Symfony\Component\DependencyInjection\Reference;
 abstract class ActionFactory extends ElaoActionFactory
 {
     /**
+     * Repository
+     *
+     * @var string
+     */
+    protected $repository;
+
+    /**
      * {@inheritdoc}
      */
     public function addConfiguration(NodeDefinition $node)
@@ -30,10 +37,6 @@ abstract class ActionFactory extends ElaoActionFactory
 
         $node
             ->children()
-                ->scalarNode('repository')
-                    ->defaultValue('repository.%name%')
-                    ->cannotBeEmpty()
-                ->end()
                 ->scalarNode('view')
                     ->defaultValue($this->getView())
                     ->cannotBeEmpty()
@@ -46,11 +49,28 @@ abstract class ActionFactory extends ElaoActionFactory
         ;
     }
 
-    public function configureAction(Definition $definition, array $config)
+    /**
+     * {@inheritdoc}
+     */
+    public function processConfig(array $rawConfig, array $administration, $name, $alias)
     {
-        $definition->addArgument(new Reference($config['repository']));
+        parent::processConfig($rawConfig, $administration, $name, $alias);
 
-        parent::configureAction($definition, $config);
+        $this->repository = $this->config['repository'];
+
+        unset($this->config['repository']);
+    }
+
+    /**
+     * Configure action service
+     *
+     * @param Definition $definition
+     * @param array $config
+     */
+    public function configureAction(Definition $definition)
+    {
+        $definition->replaceArgument(0, new Reference($this->repository));
+        $definition->addArgument($this->config);
     }
 
     /**

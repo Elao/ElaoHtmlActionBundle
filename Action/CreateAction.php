@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * The default action for create pages
  */
-class CreateAction extends FormAction
+class CreateAction extends AbstractFormAction
 {
     /**
      * {@inheritdoc}

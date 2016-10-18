@@ -59,6 +59,25 @@ class ListActionFactory extends ActionFactory
     }
 
     /**
+     * Configure action service
+     *
+     * @param Definition $definition
+     * @param array $config
+     */
+    public function configureAction(Definition $definition)
+    {
+        parent::configureAction($definition);
+
+        if ($this->config['pagination']['enabled']) {
+            $definition->addMethodCall('setPaginator', new Reference($this->config['pagination']['paginator']));
+        }
+
+        if ($this->config['filters']['enabled']) {
+            $definition->addMethodCall('setFormFactory', new Reference('form.factory'));
+        }
+    }
+
+    /**
      * Get default view parameter name for model variable
      *
      * @return string
@@ -66,25 +85,6 @@ class ListActionFactory extends ActionFactory
     protected function getViewParameter()
     {
         return '%names%';
-    }
-
-    /**
-     * Configure action service
-     *
-     * @param Definition $definition
-     * @param array $config
-     */
-    public function configureAction(Definition $definition, array $config)
-    {
-        parent::configureAction($definition, $config);
-
-        if ($config['pagination']['enabled']) {
-            $definition->addMethodCall('setPaginator', new Reference($config['pagination']['paginator']));
-        }
-
-        if ($config['filters']['enabled']) {
-            $definition->addMethodCall('setFormFactory', new Reference('form.factory'));
-        }
     }
 
     /**

@@ -21,24 +21,6 @@ class DeleteActionFactory extends FormActionFactory
     /**
      * {@inheritdoc}
      */
-    public function addConfiguration(NodeDefinition $node)
-    {
-        parent::addConfiguration($node);
-
-        $node
-            ->children()
-                ->scalarNode('form')
-                    ->info('Form class name or service id.')
-                    ->defaultValue($this->getFormType())
-                    ->cannotBeEmpty()
-                ->end()
-            ->end()
-        ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getKey()
     {
         return 'html_delete';
@@ -55,7 +37,7 @@ class DeleteActionFactory extends FormActionFactory
     /**
      * {@inheritdoc}
      */
-    public function getFormType() {
+    protected function getFormType() {
         return 'Elao\Bundle\HtmlActionBundle\Form\Type\DeleteType';
     }
 

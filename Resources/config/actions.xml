@@ -6,12 +6,13 @@
 
     <services>
         <!-- Abstract Action -->
-        <service id="elao_html_action.action" class="Elao\Bundle\HtmlActionBundle\Action\Action" abstract="true">
+        <service id="elao_html_action.action" class="Elao\Bundle\HtmlActionBundle\Action\AbstractAction" abstract="true">
+            <argument><!-- Repository --></argument>
             <argument type="service" id="templating" />
         </service>
 
         <!-- Form Abstract Action -->
-        <service id="elao_html_action.action.form" class="Elao\Bundle\HtmlActionBundle\Action\FormAction" parent="elao_html_action.action" abstract="true">
+        <service id="elao_html_action.action.form" class="Elao\Bundle\HtmlActionBundle\Action\AbstractFormAction" parent="elao_html_action.action" abstract="true">
             <argument type="service" id="form.factory" />
             <argument type="service" id="elao_admin.notifier" />
             <argument type="service" id="elao_admin.route_resolver" />

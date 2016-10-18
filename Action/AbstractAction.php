@@ -20,16 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Abstract action
  */
-abstract class Action implements ActionInterface
+abstract class AbstractAction implements ActionInterface
 {
-    /**
-     * Template engine
-     *
-     * @var EngineInterface $templating
-     */
-    protected $templating;
-
-    /**
+/**
      * Repository
      *
      * @var RepositoryInterface
@@ -44,26 +37,25 @@ abstract class Action implements ActionInterface
     protected $parameters;
 
     /**
-     * Constructor
+     * Template engine
      *
-     * @param EngineInterface $templating
-     * @param RepositoryInterface $repository
-     * @param array $parameters
+     * @var EngineInterface $templating
      */
-    public function __construct(
-        EngineInterface $templating,
-        RepositoryInterface $repository,
-        array $parameters = []
-    ) {
-        $this->templating = $templating;
-        $this->repository = $repository;
-        $this->parameters = $parameters;
-    }
+    protected $templating;
 
     /**
-     * {@inheritdoc}
+     * Constructor
+     *
+     * @param RepositoryInterface $repository
+     * @param EngineInterface $templating
+     * @param array $parameters
      */
-    abstract public function getResponse(Request $request);
+    public function __construct(RepositoryInterface $repository, EngineInterface $templating, array $parameters)
+    {
+        $this->repository = $repository;
+        $this->templating = $templating;
+        $this->parameters = $parameters;
+    }
 
     /**
      * Create response
