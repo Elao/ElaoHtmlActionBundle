@@ -42,13 +42,13 @@ abstract class AbstractFormAction extends AbstractAction
     protected $notifier;
 
     /**
-     * Indject dependencies
+     * Inject dependencies
      *
-     * @param EngineInterface $templating
      * @param RepositoryInterface $repository
-     * @param RouteResolverInterface $routes
+     * @param EngineInterface $templating
      * @param FormFactoryInterface $formFactory
      * @param NotifierInterface $notifier
+     * @param RouteResolverInterface $routes
      * @param array $parameters
      */
     public function __construct(

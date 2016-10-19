@@ -11,7 +11,7 @@
 
 namespace Elao\Bundle\HtmlActionBundle\Action;
 
-use Elao\Bundle\HtmlActionBundle\Behaviour\FilterSetInterface;
+use Elao\Bundle\AdminBundle\Behaviour\FilterSetInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,36 +83,10 @@ class ListAction extends AbstractAction
             return null;
         }
 
-        $data = $this->getFormData($this->parameters['filters']['data']);
-
         return $this->formFactory
-            ->create($this->parameters['filters']['form'], $data)
+            ->create($this->parameters['filters']['form'])
             ->add('reset', 'reset')
             ->add('submit', 'submit');
-    }
-
-    /**
-     * Get form data
-     *
-     * @param null|string $data
-     *
-     * @return array
-     */
-    protected function getFormData($data = null)
-    {
-        if (!$data) {
-            return [];
-        }
-
-        if (!class_exists($data)) {
-            throw new \Exception(sprintf('Class "%s" does not exist.', $data));
-        }
-
-        if (!in_array(FilterSetInterface::class, class_implements($data))) {
-            throw new \Exception(sprintf('Class "%s" must implement FilterSetInterface.', $data));
-        }
-
-        return new $data;
     }
 
     /**
@@ -161,7 +135,7 @@ class ListAction extends AbstractAction
         $perPage = $this->parameters['pagination']['per_page'];
         $paginable = $this->repository->paginate($filters);
 
-        return $this->paginator->paginate($target, $page, $perPage);
+        return $this->paginator->paginate($paginable, $page, $perPage);
     }
 
     /**

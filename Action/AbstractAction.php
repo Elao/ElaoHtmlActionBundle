@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractAction implements ActionInterface
 {
-/**
+    /**
      * Repository
      *
      * @var RepositoryInterface
@@ -50,8 +50,11 @@ abstract class AbstractAction implements ActionInterface
      * @param EngineInterface $templating
      * @param array $parameters
      */
-    public function __construct(RepositoryInterface $repository, EngineInterface $templating, array $parameters)
-    {
+    public function __construct(
+        RepositoryInterface $repository,
+        EngineInterface $templating,
+        array $parameters
+    ) {
         $this->repository = $repository;
         $this->templating = $templating;
         $this->parameters = $parameters;
