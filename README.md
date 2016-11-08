@@ -1,4 +1,4 @@
-HTML Action Bundle
+HTML Action Bundle ![](https://img.shields.io/badge/Symfony-3.0-blue.svg)
 ==================
 
 This bundle provides CRUD + List Actions to be used with [ElaoAdminBundle](https://github.com/Elao/ElaoAdminBundle)
