@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -33,7 +33,7 @@ class ListActionFactory extends ActionFactory
                     ->canBeEnabled()
                     ->children()
                         ->scalarNode('paginator')
-                            ->defaultValue('@knp_paginator')
+                            ->defaultValue('knp_paginator')
                             ->cannotBeEmpty()
                         ->end()
                         ->scalarNode('per_page')
@@ -67,6 +67,7 @@ class ListActionFactory extends ActionFactory
 
         if ($this->config['pagination']['enabled']) {
             $definition->addMethodCall('setPaginator', new Reference($this->config['pagination']['paginator']));
+            unset($this->config['pagination']['paginator']);
         }
 
         if ($this->config['filters']['enabled']) {

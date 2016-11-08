@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -63,7 +63,8 @@ abstract class FormActionFactory extends ActionFactory
      *
      * @return null|string
      */
-    protected function getFormType() {
+    protected function getFormType()
+    {
         return null;
     }
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,8 @@ class AdministrationConfigurator implements AdministrationConfiguratorInterface
      *
      * @param NodeBuilder $node
      */
-    public function configure(NodeBuilder $node) {
+    public function configure(NodeBuilder $node)
+    {
         $node
             ->scalarNode('repository')
                 ->info('Must implements Elao\Bundle\AdminBundle\Behaviour\RepositoryInterface')
