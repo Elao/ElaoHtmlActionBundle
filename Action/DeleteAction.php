@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,17 +18,15 @@ use Symfony\Component\Form\Form;
 /**
  * The default action for delete pages
  */
-class DeleteAction extends FormAction
+class DeleteAction extends AbstractFormAction
 {
     /**
      * {@inheritdoc}
      */
     protected function getModel(Request $request)
     {
-        $model = $this->modelManager->find($request->get('_route_params'));
-
-        if (!$model) {
-            throw new NotFoundHttpException;
+        if (!$model = $this->repository->findOneBy($request->get('_route_params'))) {
+            throw new NotFoundHttpException();
         }
 
         return $model;
@@ -41,6 +39,6 @@ class DeleteAction extends FormAction
      */
     protected function onFormValid(Form $form)
     {
-        $this->modelManager->delete($form->getData());
+        $this->repository->delete($form->getData());
     }
 }

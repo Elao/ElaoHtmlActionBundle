@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,33 +12,13 @@
 namespace Elao\Bundle\HtmlActionBundle\Action;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Elao\Bundle\AdminBundle\Action\Action;
 
 /**
  * The default action for read pages
  */
-class ReadAction extends Action
+class ReadAction extends AbstractAction
 {
-    /**
-     * Template engine
-     *
-     * @var EngineInterface $templating
-     */
-    protected $templating;
-
-    /**
-     * Indject dependencies
-     *
-     * @param EngineInterface $templating
-     */
-    public function __construct(EngineInterface $templating)
-    {
-        $this->templating = $templating;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -46,7 +26,9 @@ class ReadAction extends Action
     {
         $model = $this->getModel($request);
 
-        return $this->createResponse($this->getViewParameters($request, $model));
+        return $this->createResponse(
+            $this->getViewParameters($request, $model)
+        );
     }
 
     /**
@@ -59,7 +41,7 @@ class ReadAction extends Action
      */
     protected function getViewParameters(Request $request, $model)
     {
-        return ['model' => $model];
+        return [$this->parameters['view_parameter'] => $model];
     }
 
     /**
@@ -71,26 +53,10 @@ class ReadAction extends Action
      */
     protected function getModel(Request $request)
     {
-        $model = $this->modelManager->find($request->get('_route_params'));
-
-        if (!$model) {
-            throw new NotFoundHttpException;
+        if (!$model = $this->repository->findOneBy($request->get('_route_params'))) {
+            throw new NotFoundHttpException();
         }
 
         return $model;
-    }
-
-    /**
-     * Create response
-     *
-     * @param array $parameters
-     *
-     * @return Response
-     */
-    protected function createResponse(array $parameters = [])
-    {
-        return new Response(
-            $this->templating->render($this->parameters['view'], $parameters)
-        );
     }
 }

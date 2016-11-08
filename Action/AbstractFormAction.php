@@ -3,7 +3,7 @@
 /*
  * This file is part of the ElaoHtmlActionBundle.
  *
- * (c) 2014 Elao <contact@elao.com>
+ * (c) 2016 Elao <contact@elao.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,30 +11,22 @@
 
 namespace Elao\Bundle\HtmlActionBundle\Action;
 
+use Elao\Bundle\AdminBundle\Behaviour\NotifierInterface;
+use Elao\Bundle\AdminBundle\Behaviour\RepositoryInterface;
+use Elao\Bundle\AdminBundle\Behaviour\RouteResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\RouterInterface;
-use Elao\Bundle\AdminBundle\Action\Action;
-use Elao\Bundle\AdminBundle\Behaviour\NotifierInterface;
 
 /**
  * The default action for create and update pages
  */
-abstract class FormAction extends Action
+abstract class AbstractFormAction extends AbstractAction
 {
-    /**
-     * Template engine
-     *
-     * @var EngineInterface $templating
-     */
-    protected $templating;
-
     /**
      * Form factory
      *
@@ -50,17 +42,28 @@ abstract class FormAction extends Action
     protected $notifier;
 
     /**
-     * Indject dependencies
+     * Inject dependencies
      *
+     * @param RepositoryInterface $repository
      * @param EngineInterface $templating
      * @param FormFactoryInterface $formFactory
      * @param NotifierInterface $notifier
+     * @param RouteResolverInterface $routes
+     * @param array $parameters
      */
-    public function __construct(EngineInterface $templating, FormFactoryInterface $formFactory, NotifierInterface $notifier)
-    {
-        $this->templating  = $templating;
+    public function __construct(
+        RepositoryInterface $repository,
+        EngineInterface $templating,
+        FormFactoryInterface $formFactory,
+        NotifierInterface $notifier,
+        RouteResolverInterface $routes,
+        array $parameters
+    ) {
+        parent::__construct($repository, $templating, $parameters);
+
         $this->formFactory = $formFactory;
-        $this->notifier    = $notifier;
+        $this->notifier = $notifier;
+        $this->routes = $routes;
     }
 
     /**
@@ -69,7 +72,7 @@ abstract class FormAction extends Action
     public function getResponse(Request $request)
     {
         $model = $this->getModel($request);
-        $form  = $this->createForm($model);
+        $form = $this->createForm($model);
 
         if ($this->handleForm($request, $form)) {
             if ($form->isValid()) {
@@ -81,7 +84,9 @@ abstract class FormAction extends Action
             }
         }
 
-        return $this->createResponse($this->getViewParameters($request, $form));
+        return $this->createResponse(
+            $this->getViewParameters($request, $form)
+        );
     }
 
     /**
@@ -103,8 +108,9 @@ abstract class FormAction extends Action
     protected function createForm($model)
     {
         return $this->formFactory
-            ->create($this->getFormType($this->parameters['form_type']), $model)
-            ->add('submit', 'submit');
+            ->create($this->parameters['form'], $model)
+            ->add('submit', SubmitType::class)
+        ;
     }
 
     /**
@@ -127,8 +133,7 @@ abstract class FormAction extends Action
      */
     protected function onFormValid(Form $form)
     {
-        $this->modelManager->persist($form->getData());
-
+        $this->repository->persist($form->getData());
         $this->notifier->notifySuccess($this->getNotifyMessage($form, 'success'));
     }
 
@@ -152,32 +157,25 @@ abstract class FormAction extends Action
      */
     protected function createSuccessResponse(Request $request, Form $form)
     {
-        return new RedirectResponse($this->getSuccessUrl($request, $form->getData()));
+        return new RedirectResponse(
+            $this->getSuccessUrl($request, $form->getData())
+        );
     }
 
     /**
      * Get success url for given model
      *
+     * @param Request $request
      * @param mixed $data
      *
      * @return string
      */
     protected function getSuccessUrl(Request $request, $data)
     {
-        return $this->routeResolver->getUrl($this->parameters['redirection'], $request, $data);
-    }
-
-    /**
-     * Create response
-     *
-     * @param array $parameters
-     *
-     * @return Response
-     */
-    protected function createResponse(array $parameters = [])
-    {
-        return new Response(
-            $this->templating->render($this->parameters['view'], $parameters)
+        return $this->routes->getUrl(
+            $this->parameters['name'],
+            $this->parameters['redirection'],
+            ['id' => $data->getId()]
         );
     }
 
@@ -195,18 +193,6 @@ abstract class FormAction extends Action
     }
 
     /**
-     * Get form type
-     *
-     * @param string $formType
-     *
-     * @return string|Symfony\Component\Form\AbstractType
-     */
-    protected function getFormType($formType)
-    {
-        return class_exists($formType) ? new $formType : $formType;
-    }
-
-    /**
      * Get message for the given event
      *
      * @param Form $form
@@ -216,6 +202,11 @@ abstract class FormAction extends Action
      */
     protected function getNotifyMessage(Form $form, $event)
     {
-        return sprintf('elao_admin.notify.%s.%s', $this->parameters['alias'], $event);
+        return sprintf(
+            'elao_admin.notify.%s.%s.%s',
+            $this->parameters['alias'],
+            $this->parameters['name'],
+            $event
+        );
     }
 }
