@@ -47,6 +47,6 @@ class CreateActionFactory extends FormActionFactory
      */
     protected function getRedirection()
     {
-        return 'update';
+        return 'list';
     }
 }

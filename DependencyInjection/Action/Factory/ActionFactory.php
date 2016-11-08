@@ -38,10 +38,12 @@ abstract class ActionFactory extends ElaoActionFactory
         $node
             ->children()
                 ->scalarNode('view')
+                    ->info('The template to render the page with.')
                     ->defaultValue($this->getView())
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('view_parameter')
+                    ->info('The variable name of the model or list of model in the template.')
                     ->defaultValue($this->getViewParameter())
                     ->cannotBeEmpty()
                 ->end()

@@ -33,6 +33,7 @@ abstract class FormActionFactory extends ActionFactory
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('redirection')
+                    ->info('The action to redirect the user to when the action has been performed.')
                     ->cannotBeEmpty()
                     ->defaultValue($this->getRedirection())
                 ->end()
