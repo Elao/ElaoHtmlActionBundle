@@ -12,6 +12,8 @@
 namespace Elao\Bundle\HtmlActionBundle\DependencyInjection\Action\Factory;
 
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Form action factory
@@ -39,6 +41,18 @@ abstract class FormActionFactory extends ActionFactory
                 ->end()
             ->end()
         ;
+    }
+
+    /**
+     * Configure action service
+     *
+     * @param Definition $definition
+     */
+    public function configureAction(Definition $definition)
+    {
+        parent::configureAction($definition);
+
+        $definition->replaceArgument(4, new Reference($this->routeResolver));
     }
 
     /**

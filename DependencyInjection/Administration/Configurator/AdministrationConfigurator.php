@@ -32,6 +32,11 @@ class AdministrationConfigurator implements AdministrationConfiguratorInterface
                 ->defaultValue($this->getRepositoryName())
                 ->cannotBeEmpty()
             ->end()
+            ->scalarNode('route_resolver')
+                ->info('Must implements Elao\Bundle\AdminBundle\Behaviour\RouteResolverInterface')
+                ->defaultValue('elao_admin.route_resolver')
+                ->cannotBeEmpty()
+            ->end()
         ;
     }
 

@@ -174,7 +174,12 @@ abstract class AbstractFormAction extends AbstractAction
     {
         return $this->routes->getUrl(
             $this->parameters['name'],
-            $this->parameters['redirection']
+            $this->parameters['redirection'],
+            [],
+            [
+                'request' => $request,
+                'data' => $data,
+            ]
         );
     }
 

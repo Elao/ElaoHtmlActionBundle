@@ -29,6 +29,13 @@ abstract class ActionFactory extends ElaoActionFactory
     protected $repository;
 
     /**
+     * Route resolver
+     *
+     * @var string
+     */
+    protected $routeResolver;
+
+    /**
      * {@inheritdoc}
      */
     public function addConfiguration(NodeDefinition $node)
@@ -59,15 +66,16 @@ abstract class ActionFactory extends ElaoActionFactory
         parent::processConfig($rawConfig, $administration, $name, $alias);
 
         $this->repository = $this->config['repository'];
+        $this->routeResolver = $this->config['route_resolver'];
 
         unset($this->config['repository']);
+        unset($this->config['route_resolver']);
     }
 
     /**
      * Configure action service
      *
      * @param Definition $definition
-     * @param array $config
      */
     public function configureAction(Definition $definition)
     {
