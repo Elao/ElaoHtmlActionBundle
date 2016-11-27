@@ -172,9 +172,11 @@ abstract class AbstractFormAction extends AbstractAction
      */
     protected function getSuccessUrl(Request $request, $data)
     {
+        $redirection = $this->parameters['redirection'];
+
         return $this->routes->getUrl(
-            $this->parameters['name'],
-            $this->parameters['redirection'],
+            $redirection['name'],
+            $redirection['alias'],
             [],
             [
                 'request' => $request,
