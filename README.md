@@ -127,7 +127,7 @@ __Delete__
 
 Please note that the views are not provided with the bundle. You have to create them to display the different forms.
 
-Default path for the views is `app/Resources/%name%/%alias%.html.twig`.
+Default path for the views is `app/Resources/[name]/[alias].html.twig`.
 You can override this by setting an explicit view in action's options.
 
 ## Doctrine service repositories (optional):

@@ -82,7 +82,7 @@ abstract class ActionFactory extends ElaoActionFactory
      */
     protected function getView()
     {
-        return ':%name%:%alias%.html.twig';
+        return ':[name]:[alias].html.twig';
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class ActionFactory extends ElaoActionFactory
      */
     protected function getViewParameter()
     {
-        return '%name%';
+        return '[name]';
     }
 
     /**
@@ -100,6 +100,6 @@ abstract class ActionFactory extends ElaoActionFactory
      */
     protected function getRouteName()
     {
-        return '%name%_%alias%';
+        return '[name]_[alias]';
     }
 }

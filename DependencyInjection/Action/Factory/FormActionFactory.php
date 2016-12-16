@@ -56,7 +56,7 @@ abstract class FormActionFactory extends ActionFactory
      */
     protected function getView()
     {
-        return ':%name%:form.html.twig';
+        return ':[name]:form.html.twig';
     }
 
     /**

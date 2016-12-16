@@ -42,6 +42,6 @@ class AdministrationConfigurator implements AdministrationConfiguratorInterface
      */
     protected function getRepositoryName()
     {
-        return 'repository.%name%';
+        return 'repository.[name]';
     }
 }
