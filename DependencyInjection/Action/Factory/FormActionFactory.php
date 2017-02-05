@@ -40,12 +40,12 @@ abstract class FormActionFactory extends ActionFactory
                     ->beforeNormalization()
                         ->ifString()
                         ->then(function ($value) {
-                            return ['name' => '%name%', 'alias' => $value];
+                            return ['name' => '[name]', 'alias' => $value];
                         })
                     ->end()
                     ->children()
                         ->scalarNode('name')
-                            ->defaultValue('%name%')
+                            ->defaultValue('[name]')
                         ->end()
                         ->scalarNode('alias')
                             ->defaultValue($this->getRedirection())
@@ -83,7 +83,7 @@ abstract class FormActionFactory extends ActionFactory
      */
     protected function getView()
     {
-        return ':%name%:form.html.twig';
+        return ':[name]:form.html.twig';
     }
 
     /**

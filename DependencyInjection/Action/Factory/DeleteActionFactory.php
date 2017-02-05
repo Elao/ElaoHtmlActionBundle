@@ -47,7 +47,7 @@ class DeleteActionFactory extends FormActionFactory
      */
     protected function getRoutePattern()
     {
-        return '/%-names-%/{id}/delete';
+        return '/[-names-]/{id}/delete';
     }
 
     /**

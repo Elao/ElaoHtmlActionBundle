@@ -24,6 +24,6 @@ class CreateAction extends AbstractFormAction
      */
     protected function getModel(Request $request)
     {
-        return $this->repository->create();
+        return $this->repository->create($request->get('_route_params'));
     }
 }

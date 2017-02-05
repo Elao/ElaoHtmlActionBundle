@@ -82,7 +82,7 @@ class ListActionFactory extends ActionFactory
      */
     protected function getViewParameter()
     {
-        return '%names%';
+        return '[names]';
     }
 
     /**
@@ -106,7 +106,7 @@ class ListActionFactory extends ActionFactory
      */
     protected function getRoutePattern()
     {
-        return '/%-names-%';
+        return '/[-names-]';
     }
 
     /**
